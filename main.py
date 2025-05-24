@@ -1,6 +1,11 @@
-from stats import get_num_words , get_num_chars_per_letter
+from stats import get_num_words , get_num_chars_per_letter, get_sorted_char_per_letter
+import sys
 
-frankenstein_file_path = "../bookbot/books/frankenstein.txt"
+
+
+
+
+#filepath = "books/frankenstein.txt"
 
 def get_book_content(filepath: str) -> str: 
     """
@@ -20,12 +25,23 @@ def get_book_content(filepath: str) -> str:
 
 
 def main():
+    if len(sys.argv) == 2:
+        filepath = sys.argv[1]
+    else:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
     
-    book = get_book_content(frankenstein_file_path)
-    num_char = get_num_chars_per_letter(book)
+    book = get_book_content(filepath)
     num_words = get_num_words(book)
-    print(f"Number of characters per letter: {num_char}")
-    print(f"{num_words} words found in the document") 
+    num_char = get_sorted_char_per_letter(book)
+    print("============ BOOKBOT ============")
+    print(f"Analyzing book found at {filepath}...")
+    print("----------- Word Count ----------")
+    print(f"Found {num_words} total words")
+    print("--------- Character Count -------")
+    for i,k in num_char.items():
+        print(i,": ",k, sep="")
+    #print(num_char)
 if __name__ == "__main__":
     main()
 
